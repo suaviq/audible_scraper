@@ -1,0 +1,502 @@
+[
+    {
+        "Title": "The Sandman",
+        "By": "NeilGaiman,DirkMaggs",
+        "Narrated by": "MichaelPollan",
+        "Series": "TheSandman,Book1",
+        "Length": "10hrsand54mins",
+        "Release date": "07-15-20",
+        "Language": "English",
+        "Ratings": "4.5outof528,944ratings"
+    },
+    {
+        "Title": "Greenlights",
+        "By": "MatthewMcConaughey",
+        "Narrated by": "RizAhmed,KatDennings,TaronEgerton,NeilGaiman,JamesMcAvoy,SamanthaMorton,BebeNeuwirth,AndySerkis,MichaelSheen",
+        "Series": "DuneSaga,Book12,Dune,Book1",
+        "Length": "6hrsand42mins",
+        "Release date": "10-20-20",
+        "Language": "English",
+        "Ratings": "5outof591,945ratings"
+    },
+    {
+        "Title": "I Alone Can Fix It",
+        "By": "CarolLeonnig,PhilipRucker",
+        "Narrated by": "MatthewMcConaughey",
+        "Series": "WizardingWorld,Book1,HarryPotter,Book1",
+        "Length": "19hrsand24mins",
+        "Release date": "07-20-21",
+        "Language": "English",
+        "Ratings": "5outof51,039ratings"
+    },
+    {
+        "Title": "The Last Thing He Told Me",
+        "By": "LauraDave",
+        "Narrated by": "JanuaryLaVoy,CarolLeonnig,PhilipRucker",
+        "Series": "Reckoners,Book4",
+        "Length": "8hrsand49mins",
+        "Release date": "05-04-21",
+        "Language": "English",
+        "Ratings": "4.5outof514,633ratings"
+    },
+    {
+        "Title": "Atomic Habits",
+        "By": "JamesClear",
+        "Narrated by": "RebeccaLowman",
+        "Series": "WizardingWorld,Book2,HarryPotter,Book2",
+        "Length": "5hrsand35mins",
+        "Release date": "10-16-18",
+        "Language": "English",
+        "Ratings": "5outof567,117ratings"
+    },
+    {
+        "Title": "Project Hail Mary",
+        "By": "AndyWeir",
+        "Narrated by": "JamesClear",
+        "Series": "TheScotHarvathSeries,Book20",
+        "Length": "16hrsand10mins",
+        "Release date": "05-04-21",
+        "Language": "English",
+        "Ratings": "5outof547,438ratings"
+    },
+    {
+        "Title": "How to Be Fine",
+        "By": "JolentaGreenberg,KristenMeinzer",
+        "Narrated by": "RayPorter",
+        "Series": "HarryPotter,Book3,WizardingWorld,Book3",
+        "Length": "4hrsand54mins",
+        "Release date": "03-17-20",
+        "Language": "English",
+        "Ratings": "4.5outof5167ratings"
+    },
+    {
+        "Title": "American Marxism",
+        "By": "MarkR.Levin",
+        "Narrated by": "JolentaGreenberg,KristenMeinzer",
+        "Series": "HeathcliffLennox,Book1",
+        "Length": "9hrsand46mins",
+        "Release date": "07-13-21",
+        "Language": "English",
+        "Ratings": "5outof5531ratings"
+    },
+    {
+        "Title": "The Authoritarian Moment",
+        "By": "BenShapiro",
+        "Narrated by": "JeremyLowell,MarkR.Levin",
+        "Series": "HarryPotter,Book4,WizardingWorld,Book4",
+        "Length": "6hrsand11mins",
+        "Release date": "07-27-21",
+        "Language": "English",
+        "Ratings": "5outof5165ratings"
+    },
+    {
+        "Title": "Dune",
+        "By": "FrankHerbert",
+        "Narrated by": "BenShapiro",
+        "Series": "WizardingWorld,Book5,HarryPotter,Book5",
+        "Length": "21hrsand2mins",
+        "Release date": "12-31-06",
+        "Language": "English",
+        "Ratings": "4.5outof575,462ratings"
+    },
+    {
+        "Title": "What Happened to You?",
+        "By": "OprahWinfrey,BruceD.Perry",
+        "Narrated by": "ScottBrick,OrlaghCassidy,EuanMorton,SimonVance,IlyanaKadushin",
+        "Series": "12RulesforLife",
+        "Length": "8hrsand27mins",
+        "Release date": "04-27-21",
+        "Language": "English",
+        "Ratings": "5outof55,914ratings"
+    },
+    {
+        "Title": "False Witness",
+        "By": "KarinSlaughter",
+        "Narrated by": "BruceD.Perry,OprahWinfrey",
+        "Series": "HarryPotter,Book6,WizardingWorld,Book6",
+        "Length": "18hrsand39mins",
+        "Release date": "07-20-21",
+        "Language": "English",
+        "Ratings": "4.5outof5612ratings"
+    },
+    {
+        "Title": "Harry Potter and the Sorcerer's Stone, Book 1",
+        "By": "J.K.Rowling",
+        "Narrated by": "KathleenEarly",
+        "Series": "HarryPotter,Book7,WizardingWorld,Book7",
+        "Length": "8hrsand18mins",
+        "Release date": "11-20-15",
+        "Language": "English",
+        "Ratings": "5outof5142,466ratings"
+    },
+    {
+        "Title": "The Midnight Library",
+        "By": "MattHaig",
+        "Narrated by": "JimDale",
+        "Series": "TheBrownSisters,Book3",
+        "Length": "8hrsand50mins",
+        "Release date": "09-29-20",
+        "Language": "English",
+        "Ratings": "4.5outof527,716ratings"
+    },
+    {
+        "Title": "Where the Crawdads Sing",
+        "By": "DeliaOwens",
+        "Narrated by": "CareyMulligan",
+        "Series": "None",
+        "Length": "12hrsand12mins",
+        "Release date": "08-14-18",
+        "Language": "English",
+        "Ratings": "5outof5196,741ratings"
+    },
+    {
+        "Title": "The Paper Palace",
+        "By": "MirandaCowleyHeller",
+        "Narrated by": "CassandraCampbell",
+        "Series": "None",
+        "Length": "12hrsand37mins",
+        "Release date": "07-06-21",
+        "Language": "English",
+        "Ratings": "4.5outof51,015ratings"
+    },
+    {
+        "Title": "Malibu Rising",
+        "By": "TaylorJenkinsReid",
+        "Narrated by": "NanMcNamara",
+        "Series": "None",
+        "Length": "11hrsand5mins",
+        "Release date": "06-01-21",
+        "Language": "English",
+        "Ratings": "4.5outof55,181ratings"
+    },
+    {
+        "Title": "Can't Hurt Me",
+        "By": "DavidGoggins",
+        "Narrated by": "JuliaWhelan",
+        "Series": "None",
+        "Length": "13hrsand37mins",
+        "Release date": "11-28-18",
+        "Language": "English",
+        "Ratings": "5outof5141,815ratings"
+    },
+    {
+        "Title": "Lux",
+        "By": "BrandonSanderson,StevenMichaelBohls",
+        "Narrated by": "DavidGoggins,AdamSkolnick",
+        "Series": "None",
+        "Length": "13hrsand54mins",
+        "Release date": "07-22-21",
+        "Language": "English",
+        "Ratings": "4.5outof5348ratings"
+    },
+    {
+        "Title": "Artemis",
+        "By": "AndyWeir",
+        "Narrated by": "MacLeodAndrews",
+        "Series": "None",
+        "Length": "8hrsand57mins",
+        "Release date": "11-14-17",
+        "Language": "English",
+        "Ratings": "4.5outof577,247ratings"
+    },
+    {
+        "Title": "Harry Potter and the Chamber of Secrets, Book 2",
+        "By": "J.K.Rowling",
+        "Narrated by": "RosarioDawson",
+        "Series": "None",
+        "Length": "9hrsand3mins",
+        "Release date": "11-20-15",
+        "Language": "English",
+        "Ratings": "5outof5100,113ratings"
+    },
+    {
+        "Title": "The Subtle Art of Not Giving a F*ck",
+        "By": "MarkManson",
+        "Narrated by": "JimDale",
+        "Series": "None",
+        "Length": "5hrsand17mins",
+        "Release date": "09-13-16",
+        "Language": "English",
+        "Ratings": "4.5outof5145,619ratings"
+    },
+    {
+        "Title": "MeatEater's Campfire Stories: Close Calls",
+        "By": "StevenRinella",
+        "Narrated by": "RogerWayne",
+        "Series": "None",
+        "Length": "5hrsand15mins",
+        "Release date": "07-20-21",
+        "Language": "English",
+        "Ratings": "5outof5912ratings"
+    },
+    {
+        "Title": "Black Ice",
+        "By": "BradThor",
+        "Narrated by": "StevenRinella,theContributors",
+        "Series": "None",
+        "Length": "10hrsand7mins",
+        "Release date": "07-20-21",
+        "Language": "English",
+        "Ratings": "4.5outof5591ratings"
+    },
+    {
+        "Title": "The Four Winds",
+        "By": "KristinHannah",
+        "Narrated by": "ArmandSchultz",
+        "Series": "None",
+        "Length": "15hrsand2mins",
+        "Release date": "02-02-21",
+        "Language": "English",
+        "Ratings": "4.5outof520,172ratings"
+    },
+    {
+        "Title": "The Body Keeps the Score",
+        "By": "BesselA.vanderKolk",
+        "Narrated by": "JuliaWhelan",
+        "Series": "None",
+        "Length": "16hrsand15mins",
+        "Release date": "02-16-21",
+        "Language": "English",
+        "Ratings": "5outof51,090ratings"
+    },
+    {
+        "Title": "Harry Potter and the Prisoner of Azkaban, Book 3",
+        "By": "J.K.Rowling",
+        "Narrated by": "SeanPratt",
+        "Series": "None",
+        "Length": "11hrsand49mins",
+        "Release date": "11-20-15",
+        "Language": "English",
+        "Ratings": "5outof590,046ratings"
+    },
+    {
+        "Title": "How to Win Friends & Influence People",
+        "By": "DaleCarnegie",
+        "Narrated by": "JimDale",
+        "Series": "None",
+        "Length": "7hrsand15mins",
+        "Release date": "09-16-04",
+        "Language": "English",
+        "Ratings": "4.5outof583,835ratings"
+    },
+    {
+        "Title": "Murder at Melrose Court",
+        "By": "KarenMenuhin",
+        "Narrated by": "AndrewMacMillan",
+        "Series": "None",
+        "Length": "6hrsand25mins",
+        "Release date": "10-08-19",
+        "Language": "English",
+        "Ratings": "4.5outof55,392ratings"
+    },
+    {
+        "Title": "Harry Potter and the Goblet of Fire, Book 4",
+        "By": "J.K.Rowling",
+        "Narrated by": "SamDewhurst-Phillips",
+        "Series": "None",
+        "Length": "20hrsand37mins",
+        "Release date": "11-20-15",
+        "Language": "English",
+        "Ratings": "5outof586,581ratings"
+    },
+    {
+        "Title": "A Promised Land",
+        "By": "BarackObama",
+        "Narrated by": "JimDale",
+        "Series": "None",
+        "Length": "29hrsand10mins",
+        "Release date": "11-17-20",
+        "Language": "English",
+        "Ratings": "5outof541,011ratings"
+    },
+    {
+        "Title": "Harry Potter and the Order of the Phoenix, Book 5",
+        "By": "J.K.Rowling",
+        "Narrated by": "BarackObama",
+        "Series": "None",
+        "Length": "26hrsand29mins",
+        "Release date": "11-20-15",
+        "Language": "English",
+        "Ratings": "5outof580,310ratings"
+    },
+    {
+        "Title": "12 Rules for Life",
+        "By": "JordanB.Peterson,NormanDoidgeMD-foreword",
+        "Narrated by": "JimDale",
+        "Series": "None",
+        "Length": "15hrsand40mins",
+        "Release date": "01-23-18",
+        "Language": "English",
+        "Ratings": "4.5outof571,289ratings"
+    },
+    {
+        "Title": "Exo-Hunter",
+        "By": "JeremyRobinson",
+        "Narrated by": "JordanB.Peterson",
+        "Series": "None",
+        "Length": "10hrsand32mins",
+        "Release date": "02-16-21",
+        "Language": "English",
+        "Ratings": "4.5outof51,643ratings"
+    },
+    {
+        "Title": "Art of Seduction",
+        "By": "RobertGreene",
+        "Narrated by": "R.C.Bray",
+        "Series": "None",
+        "Length": "22hrsand51mins",
+        "Release date": "05-01-15",
+        "Language": "English",
+        "Ratings": "4.5outof55,198ratings"
+    },
+    {
+        "Title": "Never Split the Difference",
+        "By": "ChrisVoss",
+        "Narrated by": "JosephPowers",
+        "Series": "None",
+        "Length": "8hrsand7mins",
+        "Release date": "05-17-16",
+        "Language": "English",
+        "Ratings": "5outof551,524ratings"
+    },
+    {
+        "Title": "Landslide",
+        "By": "MichaelWolff",
+        "Narrated by": "MichaelKramer",
+        "Series": "None",
+        "Length": "11hrsand11mins",
+        "Release date": "07-13-21",
+        "Language": "English",
+        "Ratings": "4.5outof51,181ratings"
+    },
+    {
+        "Title": "Harry Potter and the Half-Blood Prince, Book 6",
+        "By": "J.K.Rowling",
+        "Narrated by": "HolterGraham",
+        "Series": "None",
+        "Length": "18hrsand32mins",
+        "Release date": "11-20-15",
+        "Language": "English",
+        "Ratings": "5outof575,146ratings"
+    },
+    {
+        "Title": "Harry Potter and the Deathly Hallows, Book 7",
+        "By": "J.K.Rowling",
+        "Narrated by": "JimDale",
+        "Series": "None",
+        "Length": "21hrsand37mins",
+        "Release date": "11-20-15",
+        "Language": "English",
+        "Ratings": "5outof5114,964ratings"
+    },
+    {
+        "Title": "Untamed",
+        "By": "GlennonDoyle",
+        "Narrated by": "JimDale",
+        "Series": "None",
+        "Length": "8hrsand22mins",
+        "Release date": "03-10-20",
+        "Language": "English",
+        "Ratings": "4.5outof527,583ratings"
+    },
+    {
+        "Title": "Act Your Age, Eve Brown",
+        "By": "TaliaHibbert",
+        "Narrated by": "GlennonDoyle",
+        "Series": "None",
+        "Length": "10hrsand51mins",
+        "Release date": "03-09-21",
+        "Language": "English",
+        "Ratings": "4.5outof5520ratings"
+    },
+    {
+        "Title": "Endure",
+        "By": "CameronHanes",
+        "Narrated by": "IoneButler",
+        "Series": "None",
+        "Length": "10hrs",
+        "Release date": "05-17-22",
+        "Language": "English",
+        "Ratings": "Notratedyet"
+    },
+    {
+        "Title": "The Four Agreements",
+        "By": "donMiguelRuiz",
+        "Narrated by": "PeterCoyote",
+        "Series": "None",
+        "Length": "2hrsand31mins",
+        "Release date": "01-27-05",
+        "Language": "English",
+        "Ratings": "4.5outof537,761ratings"
+    },
+    {
+        "Title": "48 Laws of Power",
+        "By": "RobertGreene",
+        "Narrated by": "RichardPoe",
+        "Series": "None",
+        "Length": "23hrsand6mins",
+        "Release date": "05-01-15",
+        "Language": "English",
+        "Ratings": "4.5outof516,606ratings"
+    },
+    {
+        "Title": "The President's Daughter",
+        "By": "JamesPatterson,BillClinton",
+        "Narrated by": "TonyTonyGoldwyn,FajerAl-Kaisi,JamesChen,JeremyDavidson,AmandaDolan,PeterGanim,DionGraham,JanuaryLaVoy,MaryStuartMasterson,SoneelaNankani",
+        "Series": "None",
+        "Length": "14hrsand21mins",
+        "Release date": "06-07-21",
+        "Language": "English",
+        "Ratings": "4.5outof53,040ratings"
+    },
+    {
+        "Title": "The Seven Husbands of Evelyn Hugo",
+        "By": "TaylorJenkinsReid",
+        "Narrated by": "AlmaCuervo,JuliaWhelan,RobinMiles",
+        "Series": "None",
+        "Length": "12hrsand10mins",
+        "Release date": "06-13-17",
+        "Language": "English",
+        "Ratings": "4.5outof516,836ratings"
+    },
+    {
+        "Title": "Algorithms to Live By",
+        "By": "BrianChristian,TomGriffiths",
+        "Narrated by": "BrianChristian",
+        "Series": "None",
+        "Length": "11hrsand50mins",
+        "Release date": "04-19-16",
+        "Language": "English",
+        "Ratings": "4.5outof515,288ratings"
+    },
+    {
+        "Title": "East of Eden",
+        "By": "JohnSteinbeck",
+        "Narrated by": "RichardPoe",
+        "Series": "None",
+        "Length": "25hrsand23mins",
+        "Release date": "06-15-11",
+        "Language": "English",
+        "Ratings": "5outof512,386ratings"
+    },
+    {
+        "Title": "People We Meet on Vacation",
+        "By": "EmilyHenry",
+        "Narrated by": "JuliaWhelan",
+        "Series": "None",
+        "Length": "10hrsand46mins",
+        "Release date": "05-11-21",
+        "Language": "English",
+        "Ratings": "4.5outof53,676ratings"
+    },
+    {
+        "Title": "This Is Your Mind on Plants",
+        "By": "MichaelPollan",
+        "Narrated by": "MichaelPollan",
+        "Series": "None",
+        "Length": "7hrsand37mins",
+        "Release date": "07-06-21",
+        "Language": "English",
+        "Ratings": "5outof5563ratings"
+    }
+]
