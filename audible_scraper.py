@@ -10,7 +10,7 @@ import time
 
 #####################################   PART 1    #####################################
 #This program downloads sample from audible.com in 12 different languages for all sorting categories
-                  
+headers = {"User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.107 Safari/537.36"}
 #different codes for the same language:
 #each list contains five codes for five sorting categories: relevance, newest-arrivals, best-selling, title, running time, average customer review
 #WARNING! RELEVANCE HAVE DIFFERENT URL FROM REST
@@ -67,8 +67,12 @@ for x in range(len(languages)):
                     time.sleep(0.2)
                     store_URL.append(url)
                     store_URL_relevance.append(relevance_url)
+                    #providing a user=agent header
+                    response = requests.get(url, headers=headers)
+                    response = requests.get(relevance_url, headers=headers)
+                    
     except:
-        print("Sorry, there is something wrong. Check the parameters of languages in list.")
+        print("Exception 1 in part 1")
         continue
 
 
@@ -165,6 +169,7 @@ def check_if_repeat(webpage, json_file):
     release_dates = audiobooks1.findAll('li', class_ = 'bc-list-item releaseDateLabel')
     languages1 = audiobooks1.findAll('li', class_ = 'bc-list-item languageLabel')
     ratings = audiobooks1.findAll('li', class_ = 'bc-list-item ratingsLabel')
+    samples = audiobooks1.findAll('button', class_ = 'bc-button-text')
     
     for q in range(len(titles1)):
         curr_title = titles1[q]['aria-label']       # reading audiobook title as string
@@ -173,6 +178,8 @@ def check_if_repeat(webpage, json_file):
             # now we add new audiobook
             audiobook = {}
             audiobook['Title'] = curr_title
+            for k in range(len(samples)):
+                audiobook['Link to sample']=samples[k]['data-mp3']
             audiobook['By']=authors[q].text.replace("\n", '').replace(' ', '').replace('By:','')
             audiobook['Narrated by']=narrators[q-1].text.replace("\n", '').replace(' ', '').replace('Narratedby:','')
             try:
@@ -187,8 +194,10 @@ def check_if_repeat(webpage, json_file):
             print('Checking is done')
         else:               #if the title exists in the list
             continue        #we skip loop iteration
-
-
+    with open(json_file, 'w',encoding='utf-8') as f:
+            json.dump(books, f, ensure_ascii=False, indent=4)
+            print('Saved to .json file')
+    print('Checking is done')
 
 
 
@@ -207,12 +216,12 @@ def check_if_repeat(webpage, json_file):
 #             continue
 
 #working
-find_and_save_data('https://www.audible.com/search?sort=popularity-rank&pageSize=50&ipRedirectOverride=true&overrideBaseCountry=true', 'test1.json')
+# find_and_save_data('https://www.audible.com/search?sort=popularity-rank&pageSize=50&ipRedirectOverride=true&overrideBaseCountry=true', 'test1.json')
 
 #thank God it's working so I hope the rest is also working
 #sample_site=f'https://www.audible.com/search?ref=a_search_c1_sort_{1}&pf_rd_p=073d8370-97e5-4b7b-be04-aa06cf22d7dd&pf_rd_r={languages[2][3]}&feature_six_browse-bin={languages_code[2]}&sort={sorting[4]}&pageSize=50'
 #print(sample_site)
 
 
-# check_if_repeat('https://www.audible.com/search?sort=popularity-rank&pageSize=50&ipRedirectOverride=true&overrideBaseCountry=true', 'test1.json')
+check_if_repeat('https://www.audible.com/search?sort=popularity-rank&pageSize=50&ipRedirectOverride=true&overrideBaseCountry=true', 'test1.json')
 
