@@ -2,10 +2,8 @@ from bs4 import BeautifulSoup
 import requests
 from urllib.parse import urljoin
 from urllib.request import Request, urlopen
-import pafy
 import json
 from requests.models import parse_header_links
-import sys
 import time
 
 #####################################   PART 1    #####################################
@@ -72,7 +70,7 @@ for x in range(len(languages)):
                     response = requests.get(relevance_url, headers=headers)
                     
     except:
-        print("Exception 1 in part 1")
+        # print("Exception 1 in part 1")
         continue
 
 
@@ -191,13 +189,13 @@ def check_if_repeat(webpage, json_file):
             audiobook['Language']=languages1[q].text.replace("\n", '').replace(' ', '').replace('Language:','')
             audiobook['Ratings']=ratings[q].text.replace("\n", '').replace(' ', '').replace(':',': ').replace('stars','')
             books.append(audiobook)
-            print('Checking is done')
+            
         else:               #if the title exists in the list
             continue        #we skip loop iteration
     with open(json_file, 'w',encoding='utf-8') as f:
             json.dump(books, f, ensure_ascii=False, indent=4)
             print('Saved to .json file')
-    print('Checking is done')
+            print('Checking is done')
 
 
 
