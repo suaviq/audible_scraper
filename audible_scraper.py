@@ -71,21 +71,29 @@ for x in range(len(languages)):
         print("Sorry, there is something wrong. Check the parameters of languages in list.")
         continue
 
-#independent
-def print_and_download_audiobooks(site):
+
+
+#####################################   PART 2  #####################################
+#This program finds data from html about audiobooks and saves it to .json file
+# also finds links to sample and downloads it if needed
+
+#working
+def find_and_save_data(page, json_file_path):
+    html_text1 = requests.get(page).text
+    s = BeautifulSoup(html_text1, 'html.parser')
+    audiobooks1 = s.find('div', class_ = 'adbl-impression-container')
+    titles1 = audiobooks1.findAll('li', class_ = 'bc-list-item productListItem') 
+    authors = audiobooks1.findAll('li', class_ = 'bc-list-item authorLabel')
+    narrators = audiobooks1.findAll('li', class_ = 'bc-list-item narratorLabel')
+    series = audiobooks1.findAll('li', class_ = 'bc-list-item seriesLabel')
+    lengths = audiobooks1.findAll('li', class_ = 'bc-list-item runtimeLabel')
+    release_dates = audiobooks1.findAll('li', class_ = 'bc-list-item releaseDateLabel')
+    languages1 = audiobooks1.findAll('li', class_ = 'bc-list-item languageLabel')
+    ratings = audiobooks1.findAll('li', class_ = 'bc-list-item ratingsLabel')
     #site is changing because there are many languages
-    webpage = site
-    html_text = requests.get(webpage).text
-    soup = BeautifulSoup(html_text, 'html.parser')
-    titles = soup.find('div', class_ = 'adbl-impression-container')
+    titles = s.find('div', class_ = 'adbl-impression-container')
     audiobooks = titles.findAll('li', class_ = """bc-list-item""") 
     samples = titles.findAll('button', class_ = 'bc-button-text')
-    #printing titles
-    for audiobook in audiobooks:
-        try:   
-            print(audiobook.find('li').text)
-        except:
-            continue
 
     #downloading audio
     #this part is commented since I don't want to download all this samples of audio
@@ -98,14 +106,55 @@ def print_and_download_audiobooks(site):
             # audio_sample.download()
         except:
             continue
-
-#####################################   PART 2  #####################################
-#This program finds data from html about audiobooks and saves it to .json file
-
 #working
-def find_and_save_data(page, json_file_path):
-    webpage1=page
-    html_text1 = requests.get(webpage1).text
+    audio_books = []
+    for q in range(len(titles1)):
+        #print(titles1[q]['aria-label'])
+        audiobook = {}
+        audiobook['Title'] = titles1[q]['aria-label']
+        audiobook['Link to sample']=samples[n]['data-mp3']
+        #print(authors[q].text.replace("\n", '').replace(' ', ''))
+        audiobook['By']=authors[q].text.replace("\n", '').replace(' ', '').replace('By:','')
+        #print(narrators[q-1].text.replace("\n", '').replace(' ', ''))
+        audiobook['Narrated by']=narrators[q-1].text.replace("\n", '').replace(' ', '').replace('Narratedby:','')
+        try:
+            #print(series[q].text.replace("\n", '').replace(' ', ''))
+            audiobook['Series']=series[q].text.replace("\n", '').replace(' ', '').replace('Series:','')
+        except:
+            #print('Series None')
+            audiobook['Series']='None'
+        #print(lengths[q].text.replace("\n", '').replace(' ', ''))
+        audiobook['Length']=lengths[q].text.replace("\n", '').replace(' ', '').replace('Length:','')
+        #print(release_dates[q].text.replace("\n", '').replace(' ', ''))
+        audiobook['Release date']=release_dates[q].text.replace("\n", '').replace(' ', '').replace('Releasedate:','')
+        #print(languages1[q].text.replace("\n", '').replace(' ', ''))
+        audiobook['Language']=languages1[q].text.replace("\n", '').replace(' ', '').replace('Language:','')
+        #print(ratings[q].text.replace("\n", '').replace(' ', ''))
+        audiobook['Ratings']=ratings[q].text.replace("\n", '').replace(' ', '').replace(':',': ').replace('stars','')
+        #print('\n')
+        audio_books.append(audiobook)
+
+        #saving metadata to .json file
+        with open(json_file_path, 'w',encoding='utf-8') as f:
+            json.dump(audio_books, f, ensure_ascii=False, indent=4)
+            print('Saved to .json file')
+
+#####################################   PART 3  #####################################
+#This program checks if given file wasn't previously downloaded
+#not done
+def check_if_repeat(webpage, json_file):
+    try:
+        books = json.load(json_file) #opening file; if it doesn't exist, we create empty list for audiobooks
+    except:
+        books = []
+    
+    #creating list with titles
+    books_titles = []
+    for book in books:
+        books_titles.append(book['Title'])
+
+    #we are in 'for q in range(len(titles1))' 
+    html_text1 = requests.get(webpage).text
     s = BeautifulSoup(html_text1, 'html.parser')
     audiobooks1 = s.find('div', class_ = 'adbl-impression-container')
     titles1 = audiobooks1.findAll('li', class_ = 'bc-list-item productListItem') 
@@ -116,47 +165,28 @@ def find_and_save_data(page, json_file_path):
     release_dates = audiobooks1.findAll('li', class_ = 'bc-list-item releaseDateLabel')
     languages1 = audiobooks1.findAll('li', class_ = 'bc-list-item languageLabel')
     ratings = audiobooks1.findAll('li', class_ = 'bc-list-item ratingsLabel')
-
-#working
-    audio_books = []
+    
     for q in range(len(titles1)):
-        #print(titles1[q]['aria-label'])
-        audio_book = {}
-        audio_book['Title'] = titles1[q]['aria-label']
-        #print(authors[q].text.replace("\n", '').replace(' ', ''))
-        audio_book['By']=authors[q].text.replace("\n", '').replace(' ', '').replace('By:','')
-        #print(narrators[q-1].text.replace("\n", '').replace(' ', ''))
-        audio_book['Narrated by']=narrators[q-1].text.replace("\n", '').replace(' ', '').replace('Narratedby:','')
-        try:
-            #print(series[q].text.replace("\n", '').replace(' ', ''))
-            audio_book['Series']=series[q].text.replace("\n", '').replace(' ', '').replace('Series:','')
-        except:
-            #print('Series None')
-            audio_book['Series']='None'
-        #print(lengths[q].text.replace("\n", '').replace(' ', ''))
-        audio_book['Length']=lengths[q].text.replace("\n", '').replace(' ', '').replace('Length:','')
-        #print(release_dates[q].text.replace("\n", '').replace(' ', ''))
-        audio_book['Release date']=release_dates[q].text.replace("\n", '').replace(' ', '').replace('Releasedate:','')
-        #print(languages1[q].text.replace("\n", '').replace(' ', ''))
-        audio_book['Language']=languages1[q].text.replace("\n", '').replace(' ', '').replace('Language:','')
-        #print(ratings[q].text.replace("\n", '').replace(' ', ''))
-        audio_book['Ratings']=ratings[q].text.replace("\n", '').replace(' ', '').replace(':',': ').replace('stars','')
-        #print('\n')
-        audio_books.append(audio_book)
-
-        #saving metadata to .json file
-        with open(json_file_path, 'w',encoding='utf-8') as f:
-            json.dump(audio_books, f, ensure_ascii=False, indent=4)
-
-
-
-#####################################   PART 3  #####################################
-#This program checks if given file wasn't previously downloaded
-
-
-
-
-
+        curr_title = titles1[q]['aria-label']       # reading audiobook title as string
+        if curr_title not in books_titles:          # if the movie isn't in the list we've created
+            books_titles.append(curr_title)         # we add it to the list with already existing titles
+            # now we add new audiobook
+            audiobook = {}
+            audiobook['Title'] = curr_title
+            audiobook['By']=authors[q].text.replace("\n", '').replace(' ', '').replace('By:','')
+            audiobook['Narrated by']=narrators[q-1].text.replace("\n", '').replace(' ', '').replace('Narratedby:','')
+            try:
+                audiobook['Series']=series[q].text.replace("\n", '').replace(' ', '').replace('Series:','')
+            except:
+                audiobook['Series']='None'
+            audiobook['Length']=lengths[q].text.replace("\n", '').replace(' ', '').replace('Length:','')
+            audiobook['Release date']=release_dates[q].text.replace("\n", '').replace(' ', '').replace('Releasedate:','')
+            audiobook['Language']=languages1[q].text.replace("\n", '').replace(' ', '').replace('Language:','')
+            audiobook['Ratings']=ratings[q].text.replace("\n", '').replace(' ', '').replace(':',': ').replace('stars','')
+            books.append(audiobook)
+            print('Checking is done')
+        else:               #if the title exists in the list
+            continue        #we skip loop iteration
 
 
 
@@ -165,23 +195,24 @@ def find_and_save_data(page, json_file_path):
 
 #####################################   MAIN    #####################################
 #it works for every site
-if __name__=="__main__":
-    for y in range(len(store_URL)):
-        try:
-            #print_and_download_audiobooks(store_URL[y])        -> should be working (if not -> check store_URL list starting from line 60)
-            #find_and_save_data(store_URL[y])                   -> should be working (if not -> check store_URL list starting from line 60)
-            pass
-        except:
-            print('Something went wrong')
-            continue
+# if __name__=="__main__":
+#     for y in range(len(store_URL)):
+#         try:
+#             #print_and_download_audiobooks(store_URL[y])        -> should be working (if not -> check store_URL list starting from line 60)
+#             #find_and_save_data(store_URL[y])                   -> should be working (if not -> check store_URL list starting from line 60)
+#             print('Should be printed')
+#             pass
+#         except:
+#             print('Something went wrong')
+#             continue
 
 #working
 find_and_save_data('https://www.audible.com/search?sort=popularity-rank&pageSize=50&ipRedirectOverride=true&overrideBaseCountry=true', 'test1.json')
 
 #thank God it's working so I hope the rest is also working
-sample_site=f'https://www.audible.com/search?ref=a_search_c1_sort_{1}&pf_rd_p=073d8370-97e5-4b7b-be04-aa06cf22d7dd&pf_rd_r={languages[2][3]}&feature_six_browse-bin={languages_code[2]}&sort={sorting[4]}&pageSize=50'
-print(sample_site)
+#sample_site=f'https://www.audible.com/search?ref=a_search_c1_sort_{1}&pf_rd_p=073d8370-97e5-4b7b-be04-aa06cf22d7dd&pf_rd_r={languages[2][3]}&feature_six_browse-bin={languages_code[2]}&sort={sorting[4]}&pageSize=50'
+#print(sample_site)
 
 
-
+# check_if_repeat('https://www.audible.com/search?sort=popularity-rank&pageSize=50&ipRedirectOverride=true&overrideBaseCountry=true', 'test1.json')
 
