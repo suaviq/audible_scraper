@@ -8,7 +8,8 @@ import time
 
 #####################################   PART 1    #####################################
 #This program downloads sample from audible.com in 12 different languages for all sorting categories
-headers = {"User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.107 Safari/537.36"}
+
+headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.107 Safari/537.36"}
 #different codes for the same language:
 #each list contains five codes for five sorting categories: relevance, newest-arrivals, best-selling, title, running time, average customer review
 #WARNING! RELEVANCE HAVE DIFFERENT URL FROM REST
@@ -25,8 +26,8 @@ mandarin_chinese = ['TZGTSKR5GFK43QERKCAQ', 'PTFTS4EX2A7Y54XA625F', 'B84C6ZWSFRH
 russian = ['71E2JT7KGZBDZ3QRJXM6', 'DTZJNS21498RYQDXCMAF', 'X059HPWCBYZ125QGJPYR', 'M8HY87CX67CDR5R6PEX9', 'X02CWRD85E1XFKV74PSE', '1MJCANYPKAD2RMZ3NXMR']               # russian      
 swedish = ['EQPN7ZC5MFFMYD73N9P8', '7MM98W9WA0BWYT09NMQ0', 'R0YX9C6EMDWEMNKZ56TG', 'ZJ1ZC2ZWAHGG8SC8K28N', '64YH326D6CN395B7HEHK', 'Y9KZF87W2E9N1DWXN03N']               # swedish
 
-
-sorting=['relevance', 'pubdate-desc-rank', 'popularity-rank','title-asc-rank', 'runtime-asc-rank','review-rank']
+#for relevance -> AN3N03RHKPJS2KM19T0N
+sorting=['AN3N03RHKPJS2KM19T0N', 'pubdate-desc-rank', 'popularity-rank','title-asc-rank', 'runtime-asc-rank','review-rank']
 languages=[english, spanish, german, french, italian, portuguese, japanese, danish, afrikaans, mandarin_chinese, russian, swedish]
 languages_code=['18685580011', '18685609011', '18685583011', '18685582011','18685590011','18685603011','18685591011','18685578011','18685571011','18685596011','18685606011','18685610011']
 
@@ -51,27 +52,27 @@ languages_code=['18685580011', '18685609011', '18685583011', '18685582011','1868
 # &pageSize=50                                                  -> the same for every page
 
 
-#should be working
+# goes through every possible combination of URL for all categories and all languages
+# saves it to list and prints it
 store_URL =[]
-store_URL_relevance =[]
-for x in range(len(languages)):
-    try:
-        for p in range(len(sorting)):
-            sorting[p]=languages[x][p]
-            for t in range(0, 6):
-                for r in range(1,6): #we must omit first string since its revelance string
-                    relevance_url = f'https://www.audible.com/search?ref=a_search_l1_feature_six_browse-bin_0&pf_rd_p=daf0f1c8-2865-4989-87fb-15115ba5a6d2&pf_rd_r={languages[x][0]}&feature_six_browse-bin={languages_code[x]}&pageSize=50'
-                    url = f'https://www.audible.com/search?ref=a_search_c1_sort_{t}&pf_rd_p=073d8370-97e5-4b7b-be04-aa06cf22d7dd&pf_rd_r={languages[x][r]}&feature_six_browse-bin={languages_code[x]}&sort={sorting[p]}&pageSize=50'
-                    time.sleep(0.2)
-                    store_URL.append(url)
-                    store_URL_relevance.append(relevance_url)
-                    #providing a user=agent header
-                    response = requests.get(url, headers=headers)
-                    response = requests.get(relevance_url, headers=headers)
-                    
-    except:
-        # print("Exception 1 in part 1")
-        continue
+def storing_URL():
+    for x in range(len(languages)): #12 languages
+        for t in range(6):
+            for f in range(len(languages_code)):
+                # print(languages_code[f])
+                for p in range(len(sorting)): #6 categories of sorting
+                    # print(sorting[p])
+                    try:
+                        url = f'https://www.audible.com/search?ref=a_search_c1_sort_{t}&pf_rd_p=073d8370-97e5-4b7b-be04-aa06cf22d7dd&pf_rd_r={languages[x][t]}&feature_six_browse-bin={languages_code[f]}&sort={sorting[p]}&pageSize=50'
+                        time.sleep(0.2)
+                        store_URL.append(url)
+                        
+                    except Exception as e:
+                        print(f"Exception: {e}, x: {x}, t: {t}, p: {p}, f: {f}")
+                        continue
+    for url in range(len(store_URL)):
+        print(store_URL[url])
+
 
 
 
@@ -81,6 +82,8 @@ for x in range(len(languages)):
 
 #working
 def find_and_save_data(page, json_file_path):
+    #providing a user-agent header
+    # response = requests.get(url, headers=headers)
     html_text1 = requests.get(page).text
     s = BeautifulSoup(html_text1, 'html.parser')
     audiobooks1 = s.find('div', class_ = 'adbl-impression-container')
@@ -139,7 +142,7 @@ def find_and_save_data(page, json_file_path):
         #saving metadata to .json file
         with open(json_file_path, 'w',encoding='utf-8') as f:
             json.dump(audio_books, f, ensure_ascii=False, indent=4)
-            print('Saved to .json file')
+        print('Saved to .json file')
 
 #####################################   PART 3  #####################################
 #This program checks if given file wasn't previously downloaded
@@ -192,34 +195,23 @@ def check_if_repeat(webpage, json_file):
             
         else:               #if the title exists in the list
             continue        #we skip loop iteration
+        
     with open(json_file, 'w',encoding='utf-8') as f:
             json.dump(books, f, ensure_ascii=False, indent=4)
-            print('Saved to .json file')
-            print('Checking is done')
+
+    print('Saved to .json file')
+    print('Checking is done')
 
 
 
 
 #####################################   MAIN    #####################################
-#it works for every site
-# if __name__=="__main__":
-#     for y in range(len(store_URL)):
-#         try:
-#             #print_and_download_audiobooks(store_URL[y])        -> should be working (if not -> check store_URL list starting from line 60)
-#             #find_and_save_data(store_URL[y])                   -> should be working (if not -> check store_URL list starting from line 60)
-#             print('Should be printed')
-#             pass
-#         except:
-#             print('Something went wrong')
-#             continue
-
+# it works for every site
+if __name__=="__main__":
 #working
-# find_and_save_data('https://www.audible.com/search?sort=popularity-rank&pageSize=50&ipRedirectOverride=true&overrideBaseCountry=true', 'test1.json')
-
-#thank God it's working so I hope the rest is also working
-#sample_site=f'https://www.audible.com/search?ref=a_search_c1_sort_{1}&pf_rd_p=073d8370-97e5-4b7b-be04-aa06cf22d7dd&pf_rd_r={languages[2][3]}&feature_six_browse-bin={languages_code[2]}&sort={sorting[4]}&pageSize=50'
-#print(sample_site)
-
-
-check_if_repeat('https://www.audible.com/search?sort=popularity-rank&pageSize=50&ipRedirectOverride=true&overrideBaseCountry=true', 'test1.json')
+    # for page in store_URL:
+    #     find_and_save_data(page, 'test1.json')
+    find_and_save_data('https://www.audible.com/search?sort=popularity-rank&pageSize=50&ipRedirectOverride=true&overrideBaseCountry=true', 'test.json')
+    # storing_URL()
+    check_if_repeat('https://www.audible.com/search?sort=popularity-rank&pageSize=50&ipRedirectOverride=true&overrideBaseCountry=true', 'test1.json')
 
