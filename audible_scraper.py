@@ -56,19 +56,19 @@ languages_code=['18685580011', '18685609011', '18685583011', '18685582011','1868
 # saves it to list and prints it
 store_URL =[]
 def storing_URL():
-    for x in range(len(languages)): #12 languages
-        for t in range(6):
-            for f in range(len(languages_code)):
+    for language in range(len(languages)): #12 languages
+        for var in range(6):
+            for language_code in range(len(languages_code)):
                 # print(languages_code[f])
-                for p in range(len(sorting)): #6 categories of sorting
+                for sort in range(len(sorting)): #6 categories of sorting
                     # print(sorting[p])
                     try:
-                        url = f'https://www.audible.com/search?ref=a_search_c1_sort_{t}&pf_rd_p=073d8370-97e5-4b7b-be04-aa06cf22d7dd&pf_rd_r={languages[x][t]}&feature_six_browse-bin={languages_code[f]}&sort={sorting[p]}&pageSize=50'
+                        url = f'https://www.audible.com/search?ref=a_search_c1_sort_{var}&pf_rd_p=073d8370-97e5-4b7b-be04-aa06cf22d7dd&pf_rd_r={languages[language][var]}&feature_six_browse-bin={languages_code[language_code]}&sort={sorting[sort]}&pageSize=50'
                         time.sleep(0.2)
                         store_URL.append(url)
                         
                     except Exception as e:
-                        print(f"Exception: {e}, x: {x}, t: {t}, p: {p}, f: {f}")
+                        print(f"Exception: {e}, variable: {var}, language: {language}, language code: {language_code}, sorting: {sort}")
                         continue
     for url in range(len(store_URL)):
         print(store_URL[url])
@@ -102,9 +102,9 @@ def find_and_save_data(page, json_file_path):
 
     #downloading audio
     #this part is commented since I don't want to download all this samples of audio
-    for n in range(len(samples)):
+    for sample in range(len(samples)):
         try:
-            print(samples[n]['data-mp3'])
+            print(samples[sample]['data-mp3'])
             # url = samples[n]['data-mp3']
             # url_sample = pafy.new(url)
             # audio_sample = url_sample.get_audio_sample()
@@ -113,29 +113,29 @@ def find_and_save_data(page, json_file_path):
             continue
 #working
     audio_books = []
-    for q in range(len(titles1)):
+    for title in range(len(titles1)):
         #print(titles1[q]['aria-label'])
         audiobook = {}
-        audiobook['Title'] = titles1[q]['aria-label']
-        audiobook['Link to sample']=samples[n]['data-mp3']
+        audiobook['Title'] = titles1[title]['aria-label']
+        audiobook['Link to sample']=samples[title]['data-mp3']
         #print(authors[q].text.replace("\n", '').replace(' ', ''))
-        audiobook['By']=authors[q].text.replace("\n", '').replace(' ', '').replace('By:','')
+        audiobook['By']=authors[title].text.replace("\n", '').replace(' ', '').replace('By:','')
         #print(narrators[q-1].text.replace("\n", '').replace(' ', ''))
-        audiobook['Narrated by']=narrators[q-1].text.replace("\n", '').replace(' ', '').replace('Narratedby:','')
+        audiobook['Narrated by']=narrators[title-1].text.replace("\n", '').replace(' ', '').replace('Narratedby:','')
         try:
             #print(series[q].text.replace("\n", '').replace(' ', ''))
-            audiobook['Series']=series[q].text.replace("\n", '').replace(' ', '').replace('Series:','')
+            audiobook['Series']=series[title].text.replace("\n", '').replace(' ', '').replace('Series:','')
         except:
             #print('Series None')
             audiobook['Series']='None'
         #print(lengths[q].text.replace("\n", '').replace(' ', ''))
-        audiobook['Length']=lengths[q].text.replace("\n", '').replace(' ', '').replace('Length:','')
+        audiobook['Length']=lengths[title].text.replace("\n", '').replace(' ', '').replace('Length:','')
         #print(release_dates[q].text.replace("\n", '').replace(' ', ''))
-        audiobook['Release date']=release_dates[q].text.replace("\n", '').replace(' ', '').replace('Releasedate:','')
+        audiobook['Release date']=release_dates[title].text.replace("\n", '').replace(' ', '').replace('Releasedate:','')
         #print(languages1[q].text.replace("\n", '').replace(' ', ''))
-        audiobook['Language']=languages1[q].text.replace("\n", '').replace(' ', '').replace('Language:','')
+        audiobook['Language']=languages1[title].text.replace("\n", '').replace(' ', '').replace('Language:','')
         #print(ratings[q].text.replace("\n", '').replace(' ', ''))
-        audiobook['Ratings']=ratings[q].text.replace("\n", '').replace(' ', '').replace(':',': ').replace('stars','')
+        audiobook['Ratings']=ratings[title].text.replace("\n", '').replace(' ', '').replace(':',': ').replace('stars','')
         #print('\n')
         audio_books.append(audiobook)
 
@@ -172,8 +172,8 @@ def check_if_repeat(webpage, json_file):
     ratings = audiobooks1.findAll('li', class_ = 'bc-list-item ratingsLabel')
     samples = audiobooks1.findAll('button', class_ = 'bc-button-text')
     
-    for q in range(len(titles1)):
-        curr_title = titles1[q]['aria-label']       # reading audiobook title as string
+    for title1 in range(len(titles1)):
+        curr_title = titles1[title1]['aria-label']       # reading audiobook title as string
         if curr_title not in books_titles:          # if the movie isn't in the list we've created
             books_titles.append(curr_title)         # we add it to the list with already existing titles
             # now we add new audiobook
@@ -181,16 +181,16 @@ def check_if_repeat(webpage, json_file):
             audiobook['Title'] = curr_title
             for k in range(len(samples)):
                 audiobook['Link to sample']=samples[k]['data-mp3']
-            audiobook['By']=authors[q].text.replace("\n", '').replace(' ', '').replace('By:','')
-            audiobook['Narrated by']=narrators[q-1].text.replace("\n", '').replace(' ', '').replace('Narratedby:','')
+            audiobook['By']=authors[title1].text.replace("\n", '').replace(' ', '').replace('By:','')
+            audiobook['Narrated by']=narrators[title1-1].text.replace("\n", '').replace(' ', '').replace('Narratedby:','')
             try:
-                audiobook['Series']=series[q].text.replace("\n", '').replace(' ', '').replace('Series:','')
+                audiobook['Series']=series[title1].text.replace("\n", '').replace(' ', '').replace('Series:','')
             except:
                 audiobook['Series']='None'
-            audiobook['Length']=lengths[q].text.replace("\n", '').replace(' ', '').replace('Length:','')
-            audiobook['Release date']=release_dates[q].text.replace("\n", '').replace(' ', '').replace('Releasedate:','')
-            audiobook['Language']=languages1[q].text.replace("\n", '').replace(' ', '').replace('Language:','')
-            audiobook['Ratings']=ratings[q].text.replace("\n", '').replace(' ', '').replace(':',': ').replace('stars','')
+            audiobook['Length']=lengths[title1].text.replace("\n", '').replace(' ', '').replace('Length:','')
+            audiobook['Release date']=release_dates[title1].text.replace("\n", '').replace(' ', '').replace('Releasedate:','')
+            audiobook['Language']=languages1[title1].text.replace("\n", '').replace(' ', '').replace('Language:','')
+            audiobook['Ratings']=ratings[title1].text.replace("\n", '').replace(' ', '').replace(':',': ').replace('stars','')
             books.append(audiobook)
             
         else:               #if the title exists in the list
@@ -209,9 +209,9 @@ def check_if_repeat(webpage, json_file):
 # it works for every site
 if __name__=="__main__":
 #working
-    # for page in store_URL:
-    #     find_and_save_data(page, 'test1.json')
-    find_and_save_data('https://www.audible.com/search?sort=popularity-rank&pageSize=50&ipRedirectOverride=true&overrideBaseCountry=true', 'test.json')
+    for page in store_URL:
+         find_and_save_data(page, 'test1.json')
+    # find_and_save_data('https://www.audible.com/search?sort=popularity-rank&pageSize=50&ipRedirectOverride=true&overrideBaseCountry=true', 'test.json')
     # storing_URL()
-    check_if_repeat('https://www.audible.com/search?sort=popularity-rank&pageSize=50&ipRedirectOverride=true&overrideBaseCountry=true', 'test1.json')
+    # check_if_repeat('https://www.audible.com/search?sort=popularity-rank&pageSize=50&ipRedirectOverride=true&overrideBaseCountry=true', 'test1.json')
 
