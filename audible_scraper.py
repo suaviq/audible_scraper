@@ -33,13 +33,6 @@ languages_code=['18685580011', '18685609011', '18685583011', '18685582011','1868
 
 # HOW THE URL IS BUILD?
 
-# FOR REVELANCE:
-# https://www.audible.com/search?ref=a_search_l1_feature_six_browse-bin_0&pf_rd_p=daf0f1c8-2865-4989-87fb-15115ba5a6d2&pf_rd_r= -> the same for every page
-# 0H3EQZDPWN4Q8R41J60E          -> unique string for each category of sorting and each language (each page has different)
-# &feature_six_browse-bin=      -> the same for every page
-# 18685580011                   -> unique code for each language (but the same for every category)
-# &pageSize=50                  -> the same for every page
-
 #FOR REST:
 # https://www.audible.com/search?ref=a_search_c1_sort_          -> the same for every page
 # 1                                                             -> index of category (is incrementing when choosing next category)
@@ -146,7 +139,7 @@ def find_and_save_data(page, json_file_path):
 
 #####################################   PART 3  #####################################
 #This program checks if given file wasn't previously downloaded
-#not done
+
 def check_if_repeat(webpage, json_file):
     try:
         books = json.load(json_file) #opening file; if it doesn't exist, we create empty list for audiobooks
@@ -173,9 +166,9 @@ def check_if_repeat(webpage, json_file):
     samples = audiobooks1.findAll('button', class_ = 'bc-button-text')
     
     for title1 in range(len(titles1)):
-        curr_title = titles1[title1]['aria-label']       # reading audiobook title as string
-        if curr_title not in books_titles:          # if the movie isn't in the list we've created
-            books_titles.append(curr_title)         # we add it to the list with already existing titles
+        curr_title = titles1[title1]['aria-label']      # reading audiobook title as string
+        if curr_title not in books_titles:              # if the movie isn't in the list we've created
+            books_titles.append(curr_title)             # we add it to the list with already existing titles
             # now we add new audiobook
             audiobook = {}
             audiobook['Title'] = curr_title
@@ -215,3 +208,4 @@ if __name__=="__main__":
     # storing_URL()
     # check_if_repeat('https://www.audible.com/search?sort=popularity-rank&pageSize=50&ipRedirectOverride=true&overrideBaseCountry=true', 'test1.json')
 
+    storing_URL()
