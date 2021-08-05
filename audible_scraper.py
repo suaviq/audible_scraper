@@ -6,10 +6,11 @@ import json
 from requests.models import parse_header_links
 import time
 
+
 #####################################   PART 1    #####################################
 #This program downloads sample from audible.com in 12 different languages for all sorting categories
 
-headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.107 Safari/537.36"}
+header = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.107 Safari/537.36"}
 #different codes for the same language:
 #each list contains five codes for five sorting categories: relevance, newest-arrivals, best-selling, title, running time, average customer review
 #WARNING! RELEVANCE HAVE DIFFERENT URL FROM REST
@@ -42,29 +43,62 @@ languages_code=['18685580011', '18685609011', '18685583011', '18685582011','1868
 # 18685580011                                                   -> unique code for each language (but the same for every category)
 # &sort=                                                        -> the same for every page
 # pubdate-desc-rank                                             -> name of the category (same for each language)
-# &pageSize=50                                                  -> the same for every page
+# &pageSize=50&page=1                                           -> the same for every page
 
 
 # goes through every possible combination of URL for all categories and all languages
 # saves it to list and prints it
-store_URL =[]
+URL_english =[]
+URL_spanish =[]
+URL_german =[]
+URL_french =[]
+URL_italian =[]
+URL_portuguese =[]
+URL_japanese =[]
+URL_danish =[]
+URL_afrikaans =[]
+URL_mandarin_chinese =[]
+URL_russian =[]
+URL_swedish =[]
+#store_URL = [URL_english, URL_spanish, URL_german, URL_french, URL_italian, URL_portuguese, URL_japanese, URL_danish, URL_afrikaans, URL_mandarin_chinese, URL_russian, URL_swedish]
 def storing_URL():
-    for language in range(len(languages)): #12 languages
-        for var in range(6):
-            for language_code in range(len(languages_code)):
+    # for language in range(len(languages)): #12 languages
+    for var in range(6):
+            # for language_code in range(len(languages_code)):
                 # print(languages_code[f])
-                for sort in range(len(sorting)): #6 categories of sorting
-                    # print(sorting[p])
-                    try:
-                        url = f'https://www.audible.com/search?ref=a_search_c1_sort_{var}&pf_rd_p=073d8370-97e5-4b7b-be04-aa06cf22d7dd&pf_rd_r={languages[language][var]}&feature_six_browse-bin={languages_code[language_code]}&sort={sorting[sort]}&pageSize=50'
-                        time.sleep(0.2)
-                        store_URL.append(url)
-                        
-                    except Exception as e:
-                        print(f"Exception: {e}, variable: {var}, language: {language}, language code: {language_code}, sorting: {sort}")
-                        continue
-    for url in range(len(store_URL)):
-        print(store_URL[url])
+        for sort in range(len(sorting)): #6 categories of sorting
+            # print(sorting[p])
+            for page_number in range(1,25):
+                try:
+                    url_english = f'https://www.audible.com/search?ref=a_search_c1_sort_{var}&pf_rd_p=073d8370-97e5-4b7b-be04-aa06cf22d7dd&pf_rd_r={languages[0][var]}&feature_six_browse-bin={languages_code[0]}&sort={sorting[sort]}&pageSize=50&page={page_number}'
+                    URL_english.append(url_english)
+                    url_spanish = f'https://www.audible.com/search?ref=a_search_c1_sort_{var}&pf_rd_p=073d8370-97e5-4b7b-be04-aa06cf22d7dd&pf_rd_r={languages[1][var]}&feature_six_browse-bin={languages_code[1]}&sort={sorting[sort]}&pageSize=50&page={page_number}'
+                    URL_spanish.append(url_spanish)
+                    url_german = f'https://www.audible.com/search?ref=a_search_c1_sort_{var}&pf_rd_p=073d8370-97e5-4b7b-be04-aa06cf22d7dd&pf_rd_r={languages[2][var]}&feature_six_browse-bin={languages_code[2]}&sort={sorting[sort]}&pageSize=50&page={page_number}'
+                    URL_german.append(url_german)
+                    url_french = f'https://www.audible.com/search?ref=a_search_c1_sort_{var}&pf_rd_p=073d8370-97e5-4b7b-be04-aa06cf22d7dd&pf_rd_r={languages[3][var]}&feature_six_browse-bin={languages_code[3]}&sort={sorting[sort]}&pageSize=50&page={page_number}'
+                    URL_french.append(url_french)
+                    url_italian = f'https://www.audible.com/search?ref=a_search_c1_sort_{var}&pf_rd_p=073d8370-97e5-4b7b-be04-aa06cf22d7dd&pf_rd_r={languages[4][var]}&feature_six_browse-bin={languages_code[4]}&sort={sorting[sort]}&pageSize=50&page={page_number}'
+                    URL_italian.append(url_italian)
+                    url_portuguese = f'https://www.audible.com/search?ref=a_search_c1_sort_{var}&pf_rd_p=073d8370-97e5-4b7b-be04-aa06cf22d7dd&pf_rd_r={languages[5][var]}&feature_six_browse-bin={languages_code[5]}&sort={sorting[sort]}&pageSize=50&page={page_number}'
+                    URL_portuguese.append(url_portuguese)
+                    url_japanese = f'https://www.audible.com/search?ref=a_search_c1_sort_{var}&pf_rd_p=073d8370-97e5-4b7b-be04-aa06cf22d7dd&pf_rd_r={languages[6][var]}&feature_six_browse-bin={languages_code[6]}&sort={sorting[sort]}&pageSize=50&page={page_number}'
+                    URL_japanese.append(url_japanese)
+                    url_danish = f'https://www.audible.com/search?ref=a_search_c1_sort_{var}&pf_rd_p=073d8370-97e5-4b7b-be04-aa06cf22d7dd&pf_rd_r={languages[7][var]}&feature_six_browse-bin={languages_code[7]}&sort={sorting[sort]}&pageSize=50&page={page_number}'
+                    URL_danish.append(url_danish)
+                    url_afrikaans = f'https://www.audible.com/search?ref=a_search_c1_sort_{var}&pf_rd_p=073d8370-97e5-4b7b-be04-aa06cf22d7dd&pf_rd_r={languages[8][var]}&feature_six_browse-bin={languages_code[8]}&sort={sorting[sort]}&pageSize=50&page={page_number}'
+                    URL_afrikaans.append(url_afrikaans)
+                    url_mandarin_chinese = f'https://www.audible.com/search?ref=a_search_c1_sort_{var}&pf_rd_p=073d8370-97e5-4b7b-be04-aa06cf22d7dd&pf_rd_r={languages[9][var]}&feature_six_browse-bin={languages_code[9]}&sort={sorting[sort]}&pageSize=50&page={page_number}'
+                    URL_mandarin_chinese.append(url_mandarin_chinese)
+                    url_russian = f'https://www.audible.com/search?ref=a_search_c1_sort_{var}&pf_rd_p=073d8370-97e5-4b7b-be04-aa06cf22d7dd&pf_rd_r={languages[10][var]}&feature_six_browse-bin={languages_code[10]}&sort={sorting[sort]}&pageSize=50&page={page_number}'
+                    URL_russian.append(url_russian)
+                    url_swedish= f'https://www.audible.com/search?ref=a_search_c1_sort_{var}&pf_rd_p=073d8370-97e5-4b7b-be04-aa06cf22d7dd&pf_rd_r={languages[11][var]}&feature_six_browse-bin={languages_code[11]}&sort={sorting[sort]}&pageSize=50&page={page_number}'
+                    URL_swedish.append(url_swedish)
+                except Exception as e:
+                    print(f"Exception: {e}, variable: {var}, sorting: {sort}")
+                    continue
+    # for url in range(len(store_URL)):
+    #     print(store_URL[url])
 
 
 
@@ -76,7 +110,7 @@ def storing_URL():
 #working
 def find_and_save_data(page, json_file_path):
     #providing a user-agent header
-    # response = requests.get(url, headers=headers)
+    
     html_text1 = requests.get(page).text
     s = BeautifulSoup(html_text1, 'html.parser')
     audiobooks1 = s.find('div', class_ = 'adbl-impression-container')
@@ -98,44 +132,65 @@ def find_and_save_data(page, json_file_path):
     for sample in range(len(samples)):
         try:
             print(samples[sample]['data-mp3'])
-            # url = samples[n]['data-mp3']
-            # url_sample = pafy.new(url)
-            # audio_sample = url_sample.get_audio_sample()
-            # audio_sample.download()
+            # urls = samples[sample]['data-mp3']
+            # r = requests.get(urls, allow_redirects=True)
+            # for title in range(len(titles1)):
+            #     title_sample = titles1[q]['aria-label']
+            #     open(f'{title_sample}.mp3', 'wb').write(r.content)
         except:
             continue
 #working
     audio_books = []
     for title in range(len(titles1)):
-        #print(titles1[q]['aria-label'])
         audiobook = {}
         audiobook['Title'] = titles1[title]['aria-label']
-        audiobook['Link to sample']=samples[title]['data-mp3']
-        #print(authors[q].text.replace("\n", '').replace(' ', ''))
-        audiobook['By']=authors[title].text.replace("\n", '').replace(' ', '').replace('By:','')
-        #print(narrators[q-1].text.replace("\n", '').replace(' ', ''))
-        audiobook['Narrated by']=narrators[title-1].text.replace("\n", '').replace(' ', '').replace('Narratedby:','')
         try:
-            #print(series[q].text.replace("\n", '').replace(' ', ''))
+            audiobook['Link to sample']=samples[title-1]['data-mp3']
+        except:
+            audiobook['Link to sample']='None'
+        try:
+            audiobook['By']=authors[title].text.replace("\n", '').replace(' ', '').replace('By:','')
+        except:
+            audiobook['By']='None'
+        try:
+            audiobook['Narrated by']=narrators[title-1].text.replace("\n", '').replace(' ', '').replace('Narratedby:','')
+        except:
+            audiobook['Narrated by']='None'
+        try:
             audiobook['Series']=series[title].text.replace("\n", '').replace(' ', '').replace('Series:','')
         except:
-            #print('Series None')
             audiobook['Series']='None'
-        #print(lengths[q].text.replace("\n", '').replace(' ', ''))
-        audiobook['Length']=lengths[title].text.replace("\n", '').replace(' ', '').replace('Length:','')
-        #print(release_dates[q].text.replace("\n", '').replace(' ', ''))
-        audiobook['Release date']=release_dates[title].text.replace("\n", '').replace(' ', '').replace('Releasedate:','')
-        #print(languages1[q].text.replace("\n", '').replace(' ', ''))
-        audiobook['Language']=languages1[title].text.replace("\n", '').replace(' ', '').replace('Language:','')
-        #print(ratings[q].text.replace("\n", '').replace(' ', ''))
-        audiobook['Ratings']=ratings[title].text.replace("\n", '').replace(' ', '').replace(':',': ').replace('stars','')
-        #print('\n')
+        try:
+            audiobook['Length']=lengths[title].text.replace("\n", '').replace(' ', '').replace('Length:','')
+        except:
+            audiobook['Length']='None'
+        try:
+            audiobook['Release date']=release_dates[title].text.replace("\n", '').replace(' ', '').replace('Releasedate:','')
+        except:
+            audiobook['Release date']='None'
+        try:
+            audiobook['Language']=languages1[title].text.replace("\n", '').replace(' ', '').replace('Language:','')
+        except:
+            audiobook['Language']='None'
+        try:
+            audiobook['Ratings']=ratings[title].text.replace("\n", '').replace(' ', '').replace(':',': ').replace('stars','')
+        except:
+            audiobook['Ratings']='None'
         audio_books.append(audiobook)
 
-        #saving metadata to .json file
-        with open(json_file_path, 'w',encoding='utf-8') as f:
-            json.dump(audio_books, f, ensure_ascii=False, indent=4)
-        print('Saved to .json file')
+    #saving metadata to .json file
+    try:
+        with open(json_file_path, 'r',encoding='utf-8') as f:
+            old_json = json.load(f)
+    except Exception as e:
+        print(e)
+        old_json = []
+
+    with open(json_file_path, 'w',encoding='utf-8') as f:
+        json.dump(audio_books + old_json, f, ensure_ascii=False, indent=4)
+    print('Saved to .json file')
+
+
 
 #####################################   PART 3  #####################################
 #This program checks if given file wasn't previously downloaded
@@ -172,8 +227,11 @@ def check_if_repeat(webpage, json_file):
             # now we add new audiobook
             audiobook = {}
             audiobook['Title'] = curr_title
-            for k in range(len(samples)):
-                audiobook['Link to sample']=samples[k]['data-mp3']
+            for title in range(len(samples)):
+                try:
+                    audiobook['Link to sample']=samples[title-1]['data-mp3']
+                except:
+                    audiobook['Link to sample']='None'
             audiobook['By']=authors[title1].text.replace("\n", '').replace(' ', '').replace('By:','')
             audiobook['Narrated by']=narrators[title1-1].text.replace("\n", '').replace(' ', '').replace('Narratedby:','')
             try:
@@ -202,10 +260,58 @@ def check_if_repeat(webpage, json_file):
 # it works for every site
 if __name__=="__main__":
 #working
-    for page in store_URL:
-         find_and_save_data(page, 'test1.json')
+    storing_URL()
+
+    for page_english in range(len(URL_english)):
+        r_english = requests.get(URL_english[page_english], headers=header)
+        find_and_save_data(URL_english[page_english], 'metadata_english.json')
+    
+    for page_spanish in range(len(URL_spanish)):
+        r_spanish = requests.get(URL_spanish[page_spanish], headers=header)
+        find_and_save_data(URL_spanish[page_spanish], 'metadata_spanish.json')
+
+    for page_german in range(len(URL_german)):
+        r_german = requests.get(URL_german[page_german], headers=header)
+        find_and_save_data(URL_german[page_german], 'metadata_german.json')
+
+    for page_french in range(len(URL_french)):
+        r_french = requests.get(URL_french[page_french], headers=header)
+        find_and_save_data(URL_french[page_french], 'metadata_french.json')
+
+    for page_italian in range(len(URL_italian)):
+        r_italian = requests.get(URL_italian[page_italian], headers=header)
+        find_and_save_data(URL_italian[page_italian], 'metadata_italian.json')
+
+    for page_portuguese in range(len(URL_portuguese)):
+        r_portuguese = requests.get(URL_portuguese[page_portuguese], headers=header)
+        find_and_save_data(URL_portuguese[page_portuguese], 'metadata_portuguese.json')
+
+    for page_japanese in range(len(URL_japanese)):
+        r_japanese = requests.get(URL_japanese[page_japanese], headers=header)
+        find_and_save_data(URL_japanese[page_japanese], 'metadata_japanese.json')
+
+    for page_danish in range(len(URL_danish)):
+        r_danish = requests.get(URL_danish[page_danish], headers=header)
+        find_and_save_data(URL_danish[page_danish], 'metadata_danish.json')
+
+    for page_afrikaans in range(len(URL_afrikaans)):
+        r_afrikaans = requests.get(URL_afrikaans[page_afrikaans], headers=header)
+        find_and_save_data(URL_afrikaans[page_afrikaans], 'metadata_afrikaans.json')
+
+    for page_mandarin_chinese in range(len(URL_mandarin_chinese)):
+        r_mandarin_chinese = requests.get(URL_mandarin_chinese[page_mandarin_chinese], headers=header)
+        find_and_save_data(URL_mandarin_chinese[page_mandarin_chinese], 'metadata_mandarin_chinese.json')
+
+    for page_russian in range(len(URL_russian)):
+        r_russian = requests.get(URL_russian[page_russian], headers=header)
+        find_and_save_data(URL_russian[page_russian], 'metadata_russian.json')
+
+    for page_swedish in range(len(URL_swedish)):
+        r_swedish = requests.get(URL_swedish[page_swedish], headers=header)
+        find_and_save_data(URL_swedish[page_swedish], 'metadata_swedish.json')
+
+
     # find_and_save_data('https://www.audible.com/search?sort=popularity-rank&pageSize=50&ipRedirectOverride=true&overrideBaseCountry=true', 'test.json')
     # storing_URL()
     # check_if_repeat('https://www.audible.com/search?sort=popularity-rank&pageSize=50&ipRedirectOverride=true&overrideBaseCountry=true', 'test1.json')
-
-    storing_URL()
+   
