@@ -5,7 +5,8 @@ from urllib.request import Request, urlopen
 import json
 from requests.models import parse_header_links
 import time
-
+import os
+from pathlib import Path
 
 #####################################   PART 1    #####################################
 #This program downloads sample from audible.com in 12 different languages for all sorting categories
@@ -31,7 +32,7 @@ swedish = ['EQPN7ZC5MFFMYD73N9P8', '7MM98W9WA0BWYT09NMQ0', 'R0YX9C6EMDWEMNKZ56TG
 sorting=['AN3N03RHKPJS2KM19T0N', 'pubdate-desc-rank', 'popularity-rank','title-asc-rank', 'runtime-asc-rank','review-rank']
 languages=[english, spanish, german, french, italian, portuguese, japanese, danish, afrikaans, mandarin_chinese, russian, swedish]
 languages_code=['18685580011', '18685609011', '18685583011', '18685582011','18685590011','18685603011','18685591011','18685578011','18685571011','18685596011','18685606011','18685610011']
-
+all_languages=['english', 'spanish', 'german', 'french', 'italian', 'portuguese', 'japanese', 'danish', 'afrikaans', 'mandarin_chinese', 'russian', 'swedish']
 # HOW THE URL IS BUILD?
 
 #FOR REST:
@@ -112,21 +113,33 @@ def find_and_save_data(page, json_file_path):
     #providing a user-agent header
     
     html_text1 = requests.get(page).text
+    time.sleep(2)
     s = BeautifulSoup(html_text1, 'html.parser')
     audiobooks1 = s.find('div', class_ = 'adbl-impression-container')
-    titles1 = audiobooks1.findAll('li', class_ = 'bc-list-item productListItem') 
+    time.sleep(0.5)
+    titles1 = audiobooks1.findAll('li', class_ = 'bc-list-item productListItem')
+    time.sleep(0.5) 
     authors = audiobooks1.findAll('li', class_ = 'bc-list-item authorLabel')
+    time.sleep(0.5)
     narrators = audiobooks1.findAll('li', class_ = 'bc-list-item narratorLabel')
+    time.sleep(0.5)
     series = audiobooks1.findAll('li', class_ = 'bc-list-item seriesLabel')
+    time.sleep(0.5)
     lengths = audiobooks1.findAll('li', class_ = 'bc-list-item runtimeLabel')
+    time.sleep(0.5)
     release_dates = audiobooks1.findAll('li', class_ = 'bc-list-item releaseDateLabel')
+    time.sleep(0.5)
     languages1 = audiobooks1.findAll('li', class_ = 'bc-list-item languageLabel')
+    time.sleep(0.5)
     ratings = audiobooks1.findAll('li', class_ = 'bc-list-item ratingsLabel')
+    time.sleep(0.5)
     #site is changing because there are many languages
     titles = s.find('div', class_ = 'adbl-impression-container')
+    time.sleep(0.5)
     audiobooks = titles.findAll('li', class_ = """bc-list-item""") 
+    time.sleep(0.5)
     samples = titles.findAll('button', class_ = 'bc-button-text')
-
+    time.sleep(2)
     #downloading audio
     #this part is commented since I don't want to download all this samples of audio
     for sample in range(len(samples)):
@@ -178,16 +191,24 @@ def find_and_save_data(page, json_file_path):
             audiobook['Ratings']='None'
         audio_books.append(audiobook)
 
+    # for n in range(len(all_languages)):
+        
+    #     for page_language in range(len(language_list)):
+    #         r = requests.get(language_list[page_language], headers=header)
+    #         file_name = find_and_save_data(language_list[page_language], f'metadata_{all_languages[n]}{page_language}.json')
+    #         write_json(curr_path, f'metadata_{all_languages[n]}{page_language}.json', file_name)
     #saving metadata to .json file
-    try:
-        with open(json_file_path, 'r',encoding='utf-8') as f:
-            old_json = json.load(f)
-    except Exception as e:
-        print(e)
-        old_json = []
+    # try:
+    #     with open(json_file_path, 'r',encoding='utf-8') as f:
+    #         old_json = json.load(f)
+    # except Exception as e:
+    #     print(e)
+    #     # old_json = []
+    # audio_books + old_json
 
-    with open(json_file_path, 'w',encoding='utf-8') as f:
-        json.dump(audio_books + old_json, f, ensure_ascii=False, indent=4)
+        with open(json_file_path, 'w',encoding='utf-8') as f:
+            json.dump(audio_books, f, ensure_ascii=False, indent=4)
+
     print('Saved to .json file')
 
 
@@ -247,68 +268,157 @@ def check_if_repeat(webpage, json_file):
         else:               #if the title exists in the list
             continue        #we skip loop iteration
         
+    try:
+        with open(json_file, 'r',encoding='utf-8') as f:
+            old_json = json.load(f)
+    except Exception as e:
+        print(e)
+        old_json = []
+
     with open(json_file, 'w',encoding='utf-8') as f:
-            json.dump(books, f, ensure_ascii=False, indent=4)
+        json.dump(books + old_json, f, ensure_ascii=False, indent=4)
 
     print('Saved to .json file')
     print('Checking is done')
 
-
-
-
+# working
+def for_languages(language_list):
+    for n in range(len(all_languages)):
+        name = all_languages[n]    
+        for page_language in range(len(language_list)):
+            r = requests.get(language_list[page_language], headers=header)
+            find_and_save_data(language_list[page_language], f'metadata_english{page_language}.json')
+            new_path = f"C:/Users/alase/OneDrive/Pulpit/Praktyki/audible_scraper/metadata_{name}"
+            if not os.path.exists(new_path):
+                os.makedirs(new_path)
+            Path(f"C:/Users/alase/OneDrive/Pulpit/Praktyki/metadata_{name}{page_language}.json").rename(f"C:/Users/alase/OneDrive/Pulpit/Praktyki/audible_scraper/metadata_{name}/metadata_{name}{page_language}.json")
+            
 #####################################   MAIN    #####################################
 # it works for every site
 if __name__=="__main__":
 #working
     storing_URL()
+    for_languages(URL_english)
+#ENGLISH
+    # for page_english in range(len(URL_english)):
+    #     r_english = requests.get(URL_english[page_english], headers=header)
+    #     find_and_save_data(URL_english[page_english], f'metadata_english{page_english}.json')
+    #     # mypath = f"C:/Users/alase/OneDrive/Pulpit/Praktyki/audible_scraper/metadata_english/metadata_english{page_english}.json"
+    #     Path(f"C:/Users/alase/OneDrive/Pulpit/Praktyki/metadata_english{page_english}.json").rename(f"C:/Users/alase/OneDrive/Pulpit/Praktyki/audible_scraper/metadata_english/metadata_english{page_english}.json")
+        
+    #         # Path(f"C:/Users/alase/OneDrive/Pulpit/Praktyki/metadata_english{page_english}.json").rename(f"C:/Users/alase/OneDrive/Pulpit/Praktyki/audible_scraper/metadata_english/metadata_english{page_english}.json")
 
-    for page_english in range(len(URL_english)):
-        r_english = requests.get(URL_english[page_english], headers=header)
-        find_and_save_data(URL_english[page_english], 'metadata_english.json')
-    
-    for page_spanish in range(len(URL_spanish)):
-        r_spanish = requests.get(URL_spanish[page_spanish], headers=header)
-        find_and_save_data(URL_spanish[page_spanish], 'metadata_spanish.json')
+# #SPANISH
+#     for page_spanish in range(len(URL_spanish)):
+#         r_spanish = requests.get(URL_spanish[page_spanish], headers=header)
+#         find_and_save_data(URL_spanish[page_spanish], 'metadata_spanish.json')
+        # if not os.path.isdir(mypath):   
+        #     os.makedirs(mypath)
+        #     Path(f"C:/Users/alase/OneDrive/Pulpit/Praktyki/metadata_spanish{page_spanish}.json").rename(f"C:/Users/alase/OneDrive/Pulpit/Praktyki/audible_scraper/metadata_english/metadata_spanish{page_spanish}.json")
+        # else:
+        #     Path(f"C:/Users/alase/OneDrive/Pulpit/Praktyki/metadata_spanish{page_spanish}.json").rename(f"C:/Users/alase/OneDrive/Pulpit/Praktyki/audible_scraper/metadata_english/metadata_spanish{page_spanish}.json")
 
-    for page_german in range(len(URL_german)):
-        r_german = requests.get(URL_german[page_german], headers=header)
-        find_and_save_data(URL_german[page_german], 'metadata_german.json')
 
-    for page_french in range(len(URL_french)):
-        r_french = requests.get(URL_french[page_french], headers=header)
-        find_and_save_data(URL_french[page_french], 'metadata_french.json')
 
-    for page_italian in range(len(URL_italian)):
-        r_italian = requests.get(URL_italian[page_italian], headers=header)
-        find_and_save_data(URL_italian[page_italian], 'metadata_italian.json')
+#     for page_german in range(len(URL_german)):
+#         r_german = requests.get(URL_german[page_german], headers=header)
+#         find_and_save_data(URL_german[page_german], 'metadata_german.json')
+#         if not os.path.isdir(mypath):   
+#             os.makedirs(mypath)
+#             Path(f"C:/Users/alase/OneDrive/Pulpit/Praktyki/metadata_german{page_german}.json").rename(f"C:/Users/alase/OneDrive/Pulpit/Praktyki/audible_scraper/metadata_english/metadata_english{page_english}.json")
+#         else:
+#             Path(f"C:/Users/alase/OneDrive/Pulpit/Praktyki/metadata_english{page_english}.json").rename(f"C:/Users/alase/OneDrive/Pulpit/Praktyki/audible_scraper/metadata_english/metadata_english{page_english}.json")
 
-    for page_portuguese in range(len(URL_portuguese)):
-        r_portuguese = requests.get(URL_portuguese[page_portuguese], headers=header)
-        find_and_save_data(URL_portuguese[page_portuguese], 'metadata_portuguese.json')
 
-    for page_japanese in range(len(URL_japanese)):
-        r_japanese = requests.get(URL_japanese[page_japanese], headers=header)
-        find_and_save_data(URL_japanese[page_japanese], 'metadata_japanese.json')
 
-    for page_danish in range(len(URL_danish)):
-        r_danish = requests.get(URL_danish[page_danish], headers=header)
-        find_and_save_data(URL_danish[page_danish], 'metadata_danish.json')
+#     for page_french in range(len(URL_french)):
+#         r_french = requests.get(URL_french[page_french], headers=header)
+#         find_and_save_data(URL_french[page_french], 'metadata_french.json')
+#         if not os.path.isdir(mypath):   
+#             os.makedirs(mypath)
+#             Path(f"C:/Users/alase/OneDrive/Pulpit/Praktyki/metadata_english{page_english}.json").rename(f"C:/Users/alase/OneDrive/Pulpit/Praktyki/audible_scraper/metadata_english/metadata_english{page_english}.json")
+#         else:
+#             Path(f"C:/Users/alase/OneDrive/Pulpit/Praktyki/metadata_english{page_english}.json").rename(f"C:/Users/alase/OneDrive/Pulpit/Praktyki/audible_scraper/metadata_english/metadata_english{page_english}.json")
 
-    for page_afrikaans in range(len(URL_afrikaans)):
-        r_afrikaans = requests.get(URL_afrikaans[page_afrikaans], headers=header)
-        find_and_save_data(URL_afrikaans[page_afrikaans], 'metadata_afrikaans.json')
 
-    for page_mandarin_chinese in range(len(URL_mandarin_chinese)):
-        r_mandarin_chinese = requests.get(URL_mandarin_chinese[page_mandarin_chinese], headers=header)
-        find_and_save_data(URL_mandarin_chinese[page_mandarin_chinese], 'metadata_mandarin_chinese.json')
+#     for page_italian in range(len(URL_italian)):
+#         r_italian = requests.get(URL_italian[page_italian], headers=header)
+#         find_and_save_data(URL_italian[page_italian], 'metadata_italian.json')
+#         if not os.path.isdir(mypath):   
+#             os.makedirs(mypath)
+#             Path(f"C:/Users/alase/OneDrive/Pulpit/Praktyki/metadata_english{page_english}.json").rename(f"C:/Users/alase/OneDrive/Pulpit/Praktyki/audible_scraper/metadata_english/metadata_english{page_english}.json")
+#         else:
+#             Path(f"C:/Users/alase/OneDrive/Pulpit/Praktyki/metadata_english{page_english}.json").rename(f"C:/Users/alase/OneDrive/Pulpit/Praktyki/audible_scraper/metadata_english/metadata_english{page_english}.json")
 
-    for page_russian in range(len(URL_russian)):
-        r_russian = requests.get(URL_russian[page_russian], headers=header)
-        find_and_save_data(URL_russian[page_russian], 'metadata_russian.json')
 
-    for page_swedish in range(len(URL_swedish)):
-        r_swedish = requests.get(URL_swedish[page_swedish], headers=header)
-        find_and_save_data(URL_swedish[page_swedish], 'metadata_swedish.json')
+#     for page_portuguese in range(len(URL_portuguese)):
+#         r_portuguese = requests.get(URL_portuguese[page_portuguese], headers=header)
+#         find_and_save_data(URL_portuguese[page_portuguese], 'metadata_portuguese.json')
+#         if not os.path.isdir(mypath):   
+#             os.makedirs(mypath)
+#             Path(f"C:/Users/alase/OneDrive/Pulpit/Praktyki/metadata_english{page_english}.json").rename(f"C:/Users/alase/OneDrive/Pulpit/Praktyki/audible_scraper/metadata_english/metadata_english{page_english}.json")
+#         else:
+#             Path(f"C:/Users/alase/OneDrive/Pulpit/Praktyki/metadata_english{page_english}.json").rename(f"C:/Users/alase/OneDrive/Pulpit/Praktyki/audible_scraper/metadata_english/metadata_english{page_english}.json")
+
+
+#     for page_japanese in range(len(URL_japanese)):
+#         r_japanese = requests.get(URL_japanese[page_japanese], headers=header)
+#         find_and_save_data(URL_japanese[page_japanese], 'metadata_japanese.json')
+#         if not os.path.isdir(mypath):   
+#             os.makedirs(mypath)
+#             Path(f"C:/Users/alase/OneDrive/Pulpit/Praktyki/metadata_english{page_english}.json").rename(f"C:/Users/alase/OneDrive/Pulpit/Praktyki/audible_scraper/metadata_english/metadata_english{page_english}.json")
+#         else:
+#             Path(f"C:/Users/alase/OneDrive/Pulpit/Praktyki/metadata_english{page_english}.json").rename(f"C:/Users/alase/OneDrive/Pulpit/Praktyki/audible_scraper/metadata_english/metadata_english{page_english}.json")
+
+
+#     for page_danish in range(len(URL_danish)):
+#         r_danish = requests.get(URL_danish[page_danish], headers=header)
+#         find_and_save_data(URL_danish[page_danish], 'metadata_danish.json')
+#         if not os.path.isdir(mypath):   
+#             os.makedirs(mypath)
+#             Path(f"C:/Users/alase/OneDrive/Pulpit/Praktyki/metadata_english{page_english}.json").rename(f"C:/Users/alase/OneDrive/Pulpit/Praktyki/audible_scraper/metadata_english/metadata_english{page_english}.json")
+#         else:
+#             Path(f"C:/Users/alase/OneDrive/Pulpit/Praktyki/metadata_english{page_english}.json").rename(f"C:/Users/alase/OneDrive/Pulpit/Praktyki/audible_scraper/metadata_english/metadata_english{page_english}.json")
+
+
+#     for page_afrikaans in range(len(URL_afrikaans)):
+#         r_afrikaans = requests.get(URL_afrikaans[page_afrikaans], headers=header)
+#         find_and_save_data(URL_afrikaans[page_afrikaans], 'metadata_afrikaans.json')
+#         if not os.path.isdir(mypath):   
+#             os.makedirs(mypath)
+#             Path(f"C:/Users/alase/OneDrive/Pulpit/Praktyki/metadata_english{page_english}.json").rename(f"C:/Users/alase/OneDrive/Pulpit/Praktyki/audible_scraper/metadata_english/metadata_english{page_english}.json")
+#         else:
+#             Path(f"C:/Users/alase/OneDrive/Pulpit/Praktyki/metadata_english{page_english}.json").rename(f"C:/Users/alase/OneDrive/Pulpit/Praktyki/audible_scraper/metadata_english/metadata_english{page_english}.json")
+
+
+#     for page_mandarin_chinese in range(len(URL_mandarin_chinese)):
+#         r_mandarin_chinese = requests.get(URL_mandarin_chinese[page_mandarin_chinese], headers=header)
+#         find_and_save_data(URL_mandarin_chinese[page_mandarin_chinese], 'metadata_mandarin_chinese.json')
+#         if not os.path.isdir(mypath):   
+#             os.makedirs(mypath)
+#             Path(f"C:/Users/alase/OneDrive/Pulpit/Praktyki/metadata_english{page_english}.json").rename(f"C:/Users/alase/OneDrive/Pulpit/Praktyki/audible_scraper/metadata_english/metadata_english{page_english}.json")
+#         else:
+#             Path(f"C:/Users/alase/OneDrive/Pulpit/Praktyki/metadata_english{page_english}.json").rename(f"C:/Users/alase/OneDrive/Pulpit/Praktyki/audible_scraper/metadata_english/metadata_english{page_english}.json")
+
+
+#     for page_russian in range(len(URL_russian)):
+#         r_russian = requests.get(URL_russian[page_russian], headers=header)
+#         find_and_save_data(URL_russian[page_russian], 'metadata_russian.json')
+#         if not os.path.isdir(mypath):   
+#             os.makedirs(mypath)
+#             Path(f"C:/Users/alase/OneDrive/Pulpit/Praktyki/metadata_english{page_english}.json").rename(f"C:/Users/alase/OneDrive/Pulpit/Praktyki/audible_scraper/metadata_english/metadata_english{page_english}.json")
+#         else:
+#             Path(f"C:/Users/alase/OneDrive/Pulpit/Praktyki/metadata_english{page_english}.json").rename(f"C:/Users/alase/OneDrive/Pulpit/Praktyki/audible_scraper/metadata_english/metadata_english{page_english}.json")
+
+
+#     for page_swedish in range(len(URL_swedish)):
+#         r_swedish = requests.get(URL_swedish[page_swedish], headers=header)
+#         find_and_save_data(URL_swedish[page_swedish], 'metadata_swedish.json')
+#         if not os.path.isdir(mypath):   
+#             os.makedirs(mypath)
+#             Path(f"C:/Users/alase/OneDrive/Pulpit/Praktyki/metadata_english{page_english}.json").rename(f"C:/Users/alase/OneDrive/Pulpit/Praktyki/audible_scraper/metadata_english/metadata_english{page_english}.json")
+#         else:
+#             Path(f"C:/Users/alase/OneDrive/Pulpit/Praktyki/metadata_english{page_english}.json").rename(f"C:/Users/alase/OneDrive/Pulpit/Praktyki/audible_scraper/metadata_english/metadata_english{page_english}.json")
 
 
     # find_and_save_data('https://www.audible.com/search?sort=popularity-rank&pageSize=50&ipRedirectOverride=true&overrideBaseCountry=true', 'test.json')
