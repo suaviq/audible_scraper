@@ -1,11 +1,15 @@
 from libraries import *
+from part1_URL import *
 
 #####################################   PART 2  #####################################
 #This program finds data from html about audiobooks and saves it to .json file
 # also finds links to sample and downloads it if needed
 
 #working
+
 def find_and_save_data(url, json_file_path):
+    list_samples = []
+    list_titles = []
     page = ''
     while page == '':
         try:
@@ -24,70 +28,78 @@ def find_and_save_data(url, json_file_path):
         time.sleep(1)
     except:
         print('Error with finding a tag adbl-impression-container')
+
     try:
         titles1 = audiobooks1.findAll('li', class_ = 'bc-list-item productListItem')
         time.sleep(1) 
     except:
         print('Error with finding a tag bc-list-item productListItem -> title')
+
     try:
         authors = audiobooks1.findAll('li', class_ = 'bc-list-item authorLabel')
         time.sleep(1)
     except:
         print('Error with finding a tag bc-list-item authorLabel -> author')
+
     try:
         narrators = audiobooks1.findAll('li', class_ = 'bc-list-item narratorLabel')
         time.sleep(1)
     except:
         print('Error with finding a tag bc-list-item narratorLabel -> narrators')
+
     try:
         series = audiobooks1.findAll('li', class_ = 'bc-list-item seriesLabel')
         time.sleep(1)
     except:
         print('Error with finding a tag bc-list-item seriesLabel -> series')
+
     try:
         lengths = audiobooks1.findAll('li', class_ = 'bc-list-item runtimeLabel')
         time.sleep(1)
     except:
         print('Error with finding a tag bc-list-item runtimeLabel -> length')
+
     try:
         release_dates = audiobooks1.findAll('li', class_ = 'bc-list-item releaseDateLabel')
         time.sleep(1)
     except:
         print('Error with finding a tag bc-list-item releaseDateLabel -> release date')
+        
     try:
         languages1 = audiobooks1.findAll('li', class_ = 'bc-list-item languageLabel')
         time.sleep(1)
     except:
         print('Error with finding a tag bc-list-item languageLabel -> language')
+
     try:
         ratings = audiobooks1.findAll('li', class_ = 'bc-list-item ratingsLabel')
         time.sleep(1)
     except:
         print('Error with finding a tag bc-list-item ratingsLabel -> ratings')
+
     try:
         samples = audiobooks1.findAll('button', class_ = 'bc-button-text')
         time.sleep(2)
     except:
         print('Error with finding a tag bc-button-text -> sample')
-    #downloading audio
-    #this part is commented since I don't want to download all this samples of audio
-    for sample in range(len(samples)):
-        try:
-            print(samples[sample]['data-mp3'])
-            # urls = samples[sample]['data-mp3']
-            # r = requests.get(urls, allow_redirects=True)
-            # for title in range(len(titles1)):
-            #     title_sample = titles1[q]['aria-label']
-            #     open(f'{title_sample}.mp3', 'wb').write(r.content)
-        except:
-            continue
+# print('https://samples.audible.com/bk/peng/005907/bk_peng_005907_sample.mp3')
+# url = 'https://samples.audible.com/bk/peng/005907/bk_peng_005907_sample.mp3'
+# r = requests.get(url, allow_redirects=True)
+# title_sample = 'test'
+# open(f'{title_sample}.mp3', 'wb').write(r.content)
+    
+
 #working
     audio_books = []
+
     for title in range(len(titles1)):
         audiobook = {}
         audiobook['Title'] = titles1[title]['aria-label']
+        list_titles.append(titles1[title]['aria-label'])
         try:
             audiobook['Link to sample']=samples[title]['data-mp3']
+            list_samples.append(samples[title]['data-mp3'])
+            print(samples[title]['data-mp3'])
         except:
             audiobook['Link to sample']='None'
         try:
@@ -95,7 +107,7 @@ def find_and_save_data(url, json_file_path):
         except:
             audiobook['By']='None'
         try:
-            audiobook['Narrated by']=narrators[title-1].text.replace("\n", '').replace(' ', '').replace('Narratedby:','')
+            audiobook['Narrated by']=narrators[title].text.replace("\n", '').replace(' ', '').replace('Narratedby:','')
         except:
             audiobook['Narrated by']='None'
         try:
@@ -134,4 +146,4 @@ def find_and_save_data(url, json_file_path):
 
     print('Saved to .json file')
 
-
+    return list_titles, list_samples
