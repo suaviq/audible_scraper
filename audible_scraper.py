@@ -14,17 +14,18 @@ if __name__=="__main__":
     # for URL_language in store_URL:
     #     for_languages(store_URL)
         # if you want to save specific data for particular language
-    # for_specific_language(URL_spanish, 1)
-    # for_specific_language(URL_german, 2)
-    # for_specific_language(URL_french, 3)
+    for_specific_language(URL_english, 0)
+    for_specific_language(URL_spanish, 1)
+    for_specific_language(URL_german, 2)
+    for_specific_language(URL_french, 3)
     for_specific_language(URL_italian, 4)
-    # for_specific_language(URL_portuguese, 5)
-    # for_specific_language(URL_japanese, 6)
-    # for_specific_language(URL_danish, 7)
-    # for_specific_language(URL_afrikaans, 8)
-    # for_specific_language(URL_mandarin_chinese, 9)
-    # for_specific_language(URL_russian, 10)
-    # for_specific_language(URL_swedish, 11)
+    for_specific_language(URL_portuguese, 5)
+    for_specific_language(URL_japanese, 6)
+    for_specific_language(URL_danish, 7)
+    for_specific_language(URL_afrikaans, 8)
+    for_specific_language(URL_mandarin_chinese, 9)
+    for_specific_language(URL_russian, 10)
+    for_specific_language(URL_swedish, 11)
     
 
     # Order and number:

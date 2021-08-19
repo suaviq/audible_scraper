@@ -51,18 +51,36 @@ def for_specific_language(language_list, n):
             os.makedirs(sample_path)
         else:
             pass
+        
         for title in range(len(list_titles)):
             try:
                 url = list_samples[title]
                 r = requests.get(url, allow_redirects=True)
                 title_sample = list_titles[title]
                 open(f'{title_sample}.mp3', 'wb').write(r.content)
-                #changing the directory
-                Path(f"C:/Users/alase/OneDrive/Pulpit/Praktyki/{title_sample}.mp3").rename(f"C:/Users/alase/OneDrive/Pulpit/Praktyki/audible_scraper/metadata_{name}/sample_{name}/{title_sample}.mp3")
-            except Exception as e:
-                print(f"Error with downloading sample. Problem: {e}")
-                continue
-        Path(f"C:/Users/alase/OneDrive/Pulpit/Praktyki/metadata_{name}{page_language}.json").rename(f"C:/Users/alase/OneDrive/Pulpit/Praktyki/audible_scraper/metadata_{name}/metadata_{name}{page_language}.json")
+                old_mp3_path =f"C:/Users/alase/OneDrive/Pulpit/Praktyki/{title_sample}.mp3"
+                new_mp3_path =f"C:/Users/alase/OneDrive/Pulpit/Praktyki/audible_scraper/metadata_{name}/sample_{name}/{title_sample}.mp3"
+                try:
+                    #changing the directory
+                    Path(f"C:/Users/alase/OneDrive/Pulpit/Praktyki/{title_sample}.mp3").rename(f"C:/Users/alase/OneDrive/Pulpit/Praktyki/audible_scraper/metadata_{name}/sample_{name}/{title_sample}.mp3")
+                except OSError:
+                    print(f'Problem 1\n\n')
+                    if os.path.exists(new_mp3_path):
+                        os.remove(old_mp3_path)
+                    else:
+                        pass
+            except OSError:
+                print(f'Problem 2\n\n')
+                if os.path.exists(new_mp3_path):
+                        os.remove(old_mp3_path)
+                else:
+                    pass
+        try:
+            Path(f"C:/Users/alase/OneDrive/Pulpit/Praktyki/metadata_{name}{page_language}.json").rename(f"C:/Users/alase/OneDrive/Pulpit/Praktyki/audible_scraper/metadata_{name}/metadata_{name}{page_language}.json")
+        except OSError:
+            print(f'Problem 3\n\n')
+            if os.path.exists(f"C:/Users/alase/OneDrive/Pulpit/Praktyki/audible_scraper/metadata_{name}/metadata_{name}{page_language}.json"):
+                os.remove(f"C:/Users/alase/OneDrive/Pulpit/Praktyki/metadata_{name}{page_language}.json")
     if os.path.isfile(f'metadata_{name}0.json'):
         os.remove(f'metadata_{name}0.json')
 # downloading sample
